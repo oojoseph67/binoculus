@@ -24,10 +24,8 @@ export class UserService {
     role?: Exclude<Roles, 'patient'>;
   }): Promise<UserResponseDto> {
     try {
-      const existingEmail = await this.userRepository.find({
-        where: {
-          email: params.email,
-        },
+      const existingEmail = await this.userRepository.findOneBy({
+        email: params.email,
       });
 
       if (existingEmail) {

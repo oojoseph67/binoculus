@@ -3,12 +3,15 @@ import {
   BeforeUpdate,
   Column,
   CreateDateColumn,
+  Entity,
   Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 export type Roles = 'patient' | 'doctor' | 'admin';
+
+@Entity({ name: 'users' })
 export class Users {
   @PrimaryGeneratedColumn()
   id: string;
@@ -17,20 +20,20 @@ export class Users {
     unique: true,
   })
   @Column({
-    type: 'string',
+    type: 'varchar',
     nullable: false,
     unique: true,
   })
   email: string;
 
   @Column({
-    type: 'string',
+    type: 'varchar',
     nullable: false,
   })
   firstName: string;
 
   @Column({
-    type: 'string',
+    type: 'varchar',
     nullable: false,
   })
   lastName: string;
@@ -39,19 +42,19 @@ export class Users {
     unique: true,
   })
   @Column({
-    type: 'string',
+    type: 'varchar',
     nullable: false,
   })
   username: string;
 
   @Column({
-    type: 'string',
+    type: 'varchar',
     default: 'patient',
   })
   role: Roles;
 
   @Column({
-    type: 'char',
+    type: 'varchar',
     nullable: false,
     length: 255,
   })
