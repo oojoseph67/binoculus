@@ -1,11 +1,14 @@
 import {
   IsEmail,
+  IsIn,
   IsNotEmpty,
+  IsOptional,
   IsString,
   Matches,
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { Roles } from '../../user/entities';
 
 export class SignupDto {
   @IsEmail()
@@ -34,7 +37,7 @@ export class SignupDto {
   })
   password: string;
 
-  @IsString()
-  @IsNotEmpty()
-  code: string;
+  @IsIn(['doctor', 'admin'])
+  @IsOptional()
+  role?: Exclude<Roles, 'patient'>;
 }
