@@ -9,13 +9,16 @@ import jwtConfig from './global/config/jwt.config';
 import databaseConfig from './global/config/database.config';
 import environmentValidation from './global/config/environmentValidation';
 import { LoggingMiddleware } from './global/logger';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
+      // useFactory: (configService: ConfigService) => ({
+      useFactory: () => ({
         throttlers: [
           {
             limit: 10,
@@ -59,6 +62,9 @@ import { LoggingMiddleware } from './global/logger';
         logging: ['error', 'warn'],
       }),
     }),
+
+    AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
