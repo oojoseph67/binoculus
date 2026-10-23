@@ -40,7 +40,16 @@ export class AuthService {
         email,
       });
 
-      return user;
+      const savedUser = await this.userService.getUser({ email: user.email });
+
+      const { accessToken, refreshToken } =
+        await this.generateTokensProvider.generateTokens({ user: savedUser });
+
+      return {
+        user,
+        accessToken,
+        refreshToken,
+      };
     } catch (error) {
       const { errorPayload, status } = getError({ error });
 
