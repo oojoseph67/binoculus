@@ -6,6 +6,7 @@ import { LoginDto, SignupDto } from './dto';
 import { getError } from '../global/utils/getError';
 import { UserService } from '../user/user.service';
 import { HashingProvider } from './providers/hashing';
+import { GenerateTokenProvider } from './providers/jwt';
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,7 @@ export class AuthService {
     private userRepository: Repository<Users>,
 
     private userService: UserService,
+    private generateTokensProvider: GenerateTokenProvider,
   ) {}
 
   async signup(signupDto: SignupDto) {
@@ -71,7 +73,13 @@ export class AuthService {
         throw new HttpException('check credentials', HttpStatus.BAD_REQUEST);
       }
 
-      return;
+      const { accessToken, refreshToken } =
+        await this.generateTokensProvider.generateTokens({ user });
+
+      return {
+        accessToken,
+        refreshToken,
+      };
     } catch (error) {
       const { errorPayload, status } = getError({ error });
 

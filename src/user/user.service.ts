@@ -62,6 +62,16 @@ export class UserService {
     }
   }
 
+  async getUser(params: {
+    raw?: true;
+    id?: string;
+    email?: string;
+  }): Promise<Users>;
+  async getUser(params: {
+    raw: false;
+    id?: string;
+    email?: string;
+  }): Promise<UserResponseDto>;
   async getUser({
     raw = true,
     id,
@@ -74,7 +84,7 @@ export class UserService {
     try {
       let user: Users;
 
-      if (!id || !email) {
+      if (!id && !email) {
         throw new HttpException(
           'provide query parameter to get user info',
           HttpStatus.FORBIDDEN,
