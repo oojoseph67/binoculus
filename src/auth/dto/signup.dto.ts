@@ -48,7 +48,7 @@ export class SignupDto {
   @ApiProperty({
     description:
       'Minimum eight characters, at least one letter, one number and one special character',
-    example: 'P@ssw0rd!',
+    example: 'SecurePass@123',
     minLength: 8,
     maxLength: 96,
     pattern: '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$',
